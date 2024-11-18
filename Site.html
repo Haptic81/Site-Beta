@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riviera Key Generator</title>
+    <!-- Custom Cursor -->
+    <style type="text/css">
+        * {
+            cursor: url(https://cur.cursors-4u.net/cursors/cur-11/cur1054.cur), auto !important;
+        }
+    </style>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #181818;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .key-container {
+            background-color: #242424;
+            border: 1px solid #FF0041;
+            border-radius: 15px;
+            width: 400px;
+            height: 250px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(255, 0, 65, 0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+
+        .key-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+            margin-bottom: 15px;
+        }
+
+        .button {
+            background-color: #242424;
+            color: white;
+            border: 1px solid #FF0041;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 5px rgba(255, 0, 65, 0.4);
+        }
+
+        .button:hover {
+            background-color: #FF0041;
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 0, 65, 0.6);
+        }
+
+        .hidden-buttons {
+            display: none;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .hidden-buttons .button {
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        /* Code Block */
+        .code-block {
+            background-color: #2a2a2a;
+            border: 1px solid #FF0041;
+            color: #00FF00;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+        }
+
+        .copy-icon {
+            color: #FF0041;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .copy-icon:hover {
+            color: white;
+        }
+
+        .waiting-text {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #FF0041;
+        }
+    </style>
+</head>
+<body>
+    <div class="key-container">
+        <img class="logo" src="https://getriviera.pages.dev/logo.png" alt="Logo" oncontextmenu="return false;">
+        <div class="key-display" id="keyDisplay">Riviera Key Generator</div>
+        <button class="button" id="lootLinkButton">Loot-Link</button>
+        <button class="button" id="linkvertiseButton">Linkvertise</button>
+
+        <!-- Code Block and Waiting Text -->
+        <div class="code-block" id="codeBlock" style="display: none;">
+            <span id="generatedKey">Your-Key-Here</span>
+            <span class="copy-icon" id="copyIcon">📋</span>
+        </div>
+        <div class="waiting-text" id="waitingText" style="display: none;">h?? m??</div>
+    </div>
+
+    <script>
+        const lootLinkButton = document.getElementById('lootLinkButton');
+        const linkvertiseButton = document.getElementById('linkvertiseButton');
+        const keyDisplay = document.getElementById('keyDisplay');
+        const codeBlock = document.getElementById('codeBlock');
+        const generatedKey = document.getElementById('generatedKey');
+        const waitingText = document.getElementById('waitingText');
+        const copyIcon = document.getElementById('copyIcon');
+
+        // Copy Key Function
+        copyIcon.addEventListener('click', () => {
+            navigator.clipboard.writeText(generatedKey.textContent);
+            alert('Key copied to clipboard!');
+        });
+
+        // Simulate Waiting for Link Completion
+        function handleLink(link) {
+            // Hide buttons and display waiting text
+            lootLinkButton.style.display = 'none';
+            linkvertiseButton.style.display = 'none';
+            keyDisplay.textContent = 'Waiting...';
+            waitingText.style.display = 'block';
+
+            // Open link
+            window.open(link, '_blank');
+
+            // Simulate redirect and key generation
+            setTimeout(() => {
+                fetch('https://raw.githubusercontent.com/xistly/Key/refs/heads/main/Key%20system')
+                    .then(response => response.text())
+                    .then(key => {
+                        keyDisplay.textContent = 'Riviera Key Generator';
+                        codeBlock.style.display = 'flex';
+                        waitingText.style.display = 'none';
+                        generatedKey.textContent = key.trim();
+                    })
+                    .catch(err => {
+                        alert('Failed to generate the key. Try again later.');
+                    });
+            }, 5000);
+        }
+
+        lootLinkButton.addEventListener('click', () => handleLink('https://loot-link-example.com'));
+        linkvertiseButton.addEventListener('click', () => handleLink('https://linkvertise.com/1208825/riviera-key-system?o=sharing'));
+    </script>
+</body>
+</html>
